@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "RegularProtester::doSomething():Actor.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "StudentWorld::existsPathToPoint(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*, int, int, int, int):StudentWorld.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "StudentWorld::existsPathToPoint(int, int, int, int):StudentWorld.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "m_field">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "StudentWorld::existsPathToFrackman(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*, int, int):StudentWorld.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "StudentWorld::pathToExit(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;*, int, int):StudentWorld.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "StudentWorld::move():StudentWorld.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
