@@ -1,0 +1,54 @@
+#!/bin/bash
+
+dir=$1
+
+nonHidden=`ls $dir | sort`
+hidden=`ls -a $dir | grep '^\.' | sort`
+let count=0
+declare -a array
+
+restore="$IFS"
+IFS=$'\n'
+
+for hFile in $hidden
+do
+    if [ -L "$dir/$hFile" ] || [ ! -f "$dir/$hFile" ]
+    then
+	:
+    elif [ ! -r "$dir/$hFile" ]
+    then
+	echo "non-readable $hFile"
+    else
+	array[$count]="$dir/$hFile"
+	let count=count+1
+    fi
+done
+
+for file in $nonHidden
+do
+    if [ -L "$dir/$file" ] || [ ! -f "$dir/$file" ]
+    then
+	:
+    elif [ ! -r "$dir/$file" ]
+    then
+	echo "non-readable $file"
+    else
+	array[$count]="$dir/$file"
+	let count=count+1
+    fi
+done
+
+for (( i=0; i<$count; i++ ))
+do
+    for (( j=i+1; j<$count; j++ ))
+    do
+	cmp -s "${array[$i]}" "${array[$j]}"
+	if [ $? -eq 0 ]
+	then
+	    ln -fP "${array[$i]}" "${array[$j]}"
+	    array[$j]=array[$i]
+	fi
+    done
+done
+
+IFS=$restore

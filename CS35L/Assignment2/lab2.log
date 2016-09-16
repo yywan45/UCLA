@@ -1,0 +1,255 @@
+SETTING UP ASSIGNMENT
+
+Command: export LC_ALL='C'
+Change to standard C locale
+
+Command: cd Classes/CS35L/Assignment2
+Command: sort -u /usr/share/dict/words > words
+Change directory to working directory
+Sort /usr/share/dict/words file into words file in working directory
+
+Command: wget http://web.cs.ucla.edu/classes/spring16/cs35L/assign/assign2.html
+Download assignment page into working directory
+
+
+TESTING OUT COMMANDS
+
+Command: tr -c 'A-Za-z' '[\n*]' < assign2.html
+Outputs letters (A-Z or a-z) on separate lines
+Appear on same lines if they are grouped together in original file
+Characters that are not letters become empty lines
+
+Command: tr -cs 'A-Za-z' '[\n*]' < assign2.html
+Similar to previous command
+Groups of letters appear on separate lines
+However non-letters do not become empty lines
+
+Command: tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort
+Output of previous command is sorted with each word on a separate line
+Can see repeated words like:
+you
+you
+you
+
+Command: tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u
+Similar to previous command but repeated words omitted
+
+Command: tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm - words
+Compares assign2.html and words
+column 1: lines unique to output of previous command
+column 2: lines unique to the file 'words'
+column 3: lines that is common to both files
+
+Command: tr -cs 'A-Za-z' '[\n*]' < assign2.html | sort -u | comm -23 - words
+Prints only column 1 of previous command output (lines that are unique to previo
+us previous command when comparing with file 'words')
+
+
+HAWAIIAN LANGUAGE SPELL CHECKER
+
+Command: wget http://mauimapp.com/moolelo/hwnwdseng.htm
+Download Hawaiian words in tables to working directory
+
+Command: cat > buildwords
+Command: Ctrl-C
+Create buildwords script file
+
+Buildwords script:
+#!/bin/bash
+
+# remove text before the table of words and the first English word
+sed '/<!DOCTYPE/,/Adopt<\/td>/d' |
+
+# remove text after the table of words
+sed '/<\/table>/,/<\/html>/d' |
+
+# remove english words
+sed '/<tr>/,/<\/td>/d'|
+
+# change upper case letters to lower case letters
+tr '[:upper:]' '[:lower:]' |
+
+# delete any html language
+sed 's/<[^>]*>//g' |
+
+# remove carriage returns
+tr -d '\r\n' |
+
+# replace </td> with new line
+sed 's/<\/td>/\n/g' |
+
+# replace comma with new line
+sed 's/\,/\n/g' |
+
+# replace ` with '
+sed s/\`/\'/g |
+
+# separate words in a sentence
+sed 's/ /\n/g' |
+
+# remove the empty lines
+sed '/^$/d'
+
+# delete incorrect haiwaiian words
+sed '/-/d' |
+
+# remove any misspelled haiwaiian language
+tr -cs "pk\'mnwlhaeiou" '[\n*]' |
+
+# sort the dictionary and remove duplicates
+sort -u |
+
+
+RUNNING THE SCRIPT
+
+Command: chmod +x buildwords
+Change permission of script so that it is user-executable
+
+Command: cat hwnwdseng.htm | ./buildwords > hwords
+Run script through webpage and pipe into hwords file in working directory
+
+SPELL CHECK
+
+Command: cat assign2.html | tr '[:upper:]' '[:lower:]' | tr -cs 'A-Za-z' '[\n*]'
+| sort -u | comm -23 - words > badEnglish
+Check for misspelled English words in assign2.html
+Take out all words that are not in 'A-Za-z', i.e. words that contain non-letters
+Change all upper case to lower case letters
+Sort and delete duplicates
+Compare output to words English file and find words unique to output
+
+Command: wc -w badEnglish
+38 misspelled English words
+
+Command: cat assign2.html | tr '[:upper:]' '[:lower:]' | tr -cs "pk\'mnwlhaeiou"
+'[\n*]' | sort -u | comm -23 - hwords > badHaiwaiian
+Check for misspelled Hawaiian words in assign2.html
+Take out all words that contain non-Hawaiian characters
+Change all upper case to lower case letters
+Sort and delete duplicates
+Compare output to hwords Hawaiian file and find words unique to output
+
+Command: wc -w badHawaiian
+196 misspelled English words
+
+Command: cat badEnglish | tr -cs "pk\'mnwlhaeiou" '[\n*]' | sort -u | comm -12 -
+hwords > badEnglishHawaiian
+Words misspelled as English, but not as Hawaiian
+e
+halau
+i
+lau
+po
+wiki
+
+Command: cat badHaiwaiian | tr -cs 'A-Za-z' '[\n*]' | sort -u | comm -12 - words
+> badHawaiianEnglish
+Words "misspelled" as Hawaiian but not as English
+a
+ail
+ain
+ake
+al
+ale
+alen
+all
+amine
+amp
+ample
+an
+aph
+aul
+awk
+e
+ea
+ee
+el
+em
+emp
+en
+ep
+epa
+h
+ha
+han
+hap
+he
+hei
+hell
+hem
+hen
+hi
+hin
+ho
+how
+howe
+ia
+ie
+ile
+imp
+in
+ion
+iou
+k
+keep
+kin
+l
+lan
+le
+lea
+li
+like
+line
+link
+ll
+ln
+lo
+lowe
+m
+mail
+man
+me
+men
+mi
+ml
+mo
+mp
+n
+name
+ne
+nee
+no
+non
+nu
+num
+o
+om
+on
+one
+op
+ope
+open
+owe
+own
+p
+pe
+pell
+people
+plea
+pu
+u
+ui
+ula
+ule
+ume
+ump
+un
+uni
+w
+wa
+wan
+we
+wh
+wha
+who
+wi

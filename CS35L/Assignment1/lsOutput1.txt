@@ -1,0 +1,102 @@
+total 4168
+drwxr-xr-x.  4 root root    4096 Mar  2 11:07 modules
+drwxr-xr-x.  2 root root    4096 Mar  2 11:07 kdump
+drwxr-xr-x.  2 root root    4096 Mar  2 11:07 tmpfiles.d
+drwxr-xr-x. 11 root root    4096 Mar  2 11:07 tuned
+drwxr-xr-x.  2 root root    4096 Mar  2 11:07 polkit-1
+drwxr-xr-x.  4 root root    4096 Mar  2 11:07 udev
+drwxr-xr-x. 13 root root    4096 Mar  2 11:07 systemd
+drwxr-xr-x.  2 root root    4096 Mar  2 11:07 sysctl.d
+drwxr-xr-x.  2 root root   12288 Feb 17 13:13 gconv
+drwxr-xr-x.  2 root root    4096 Feb 17 13:13 audit
+drwxr-xr-x.  3 root root    4096 Feb 17 13:13 rtkaio
+lrwxrwxrwx   1 root root      15 Feb 17 13:13 libutil.so.1 -> libutil-2.17.so
+lrwxrwxrwx   1 root root      19 Feb 17 13:13 libthread_db.so.1 -> libthread_db-1.0.so
+lrwxrwxrwx   1 root root      13 Feb 17 13:13 librt.so.1 -> librt-2.17.so
+lrwxrwxrwx   1 root root      17 Feb 17 13:13 libresolv.so.2 -> libresolv-2.17.so
+lrwxrwxrwx   1 root root      18 Feb 17 13:13 libpthread.so.0 -> libpthread-2.17.so
+lrwxrwxrwx   1 root root      22 Feb 17 13:13 libnss_nisplus.so.2 -> libnss_nisplus-2.17.so
+lrwxrwxrwx   1 root root      18 Feb 17 13:13 libnss_nis.so.2 -> libnss_nis-2.17.so
+lrwxrwxrwx   1 root root      21 Feb 17 13:13 libnss_hesiod.so.2 -> libnss_hesiod-2.17.so
+lrwxrwxrwx   1 root root      20 Feb 17 13:13 libnss_files.so.2 -> libnss_files-2.17.so
+lrwxrwxrwx   1 root root      18 Feb 17 13:13 libnss_dns.so.2 -> libnss_dns-2.17.so
+lrwxrwxrwx   1 root root      17 Feb 17 13:13 libnss_db.so.2 -> libnss_db-2.17.so
+lrwxrwxrwx   1 root root      21 Feb 17 13:13 libnss_compat.so.2 -> libnss_compat-2.17.so
+lrwxrwxrwx   1 root root      14 Feb 17 13:13 libnsl.so.1 -> libnsl-2.17.so
+lrwxrwxrwx   1 root root      12 Feb 17 13:13 libm.so.6 -> libm-2.17.so
+lrwxrwxrwx   1 root root      13 Feb 17 13:13 libdl.so.2 -> libdl-2.17.so
+lrwxrwxrwx   1 root root      16 Feb 17 13:13 libcrypt.so.1 -> libcrypt-2.17.so
+lrwxrwxrwx   1 root root      15 Feb 17 13:13 libcidn.so.1 -> libcidn-2.17.so
+lrwxrwxrwx   1 root root      12 Feb 17 13:13 libc.so.6 -> libc-2.17.so
+lrwxrwxrwx   1 root root      14 Feb 17 13:13 libanl.so.1 -> libanl-2.17.so
+lrwxrwxrwx   1 root root      10 Feb 17 13:13 ld-linux.so.2 -> ld-2.17.so
+lrwxrwxrwx   1 root root      23 Feb 17 13:13 libBrokenLocale.so.1 -> libBrokenLocale-2.17.so
+drwxr-xr-x.  2 root root    4096 Feb 17 13:13 locale
+-rwxr-xr-x   1 root root   21488 Feb  5 08:51 libmemusage.so
+-rwxr-xr-x   1 root root   54756 Feb  5 08:51 libnss_files-2.17.so
+-rwxr-xr-x   1 root root    7544 Feb  5 08:51 libpcprofile.so
+-rwxr-xr-x   1 root root  146328 Feb  5 08:51 ld-2.17.so
+-rwxr-xr-x   1 root root   40000 Feb  5 08:51 libnss_compat-2.17.so
+-rwxr-xr-x   1 root root   62832 Feb  5 08:51 libnss_nisplus-2.17.so
+-rwxr-xr-x   1 root root  129964 Feb  5 08:51 libpthread-2.17.so
+-rwxr-xr-x   1 root root   13832 Feb  5 08:51 libanl-2.17.so
+-rwxr-xr-x   1 root root  108024 Feb  5 08:51 libresolv-2.17.so
+-rwxr-xr-x   1 root root   34652 Feb  5 08:51 libcrypt-2.17.so
+-rwxr-xr-x   1 root root  311500 Feb  5 08:51 libm-2.17.so
+-rwxr-xr-x   1 root root   20492 Feb  5 08:51 libSegFault.so
+-rwxr-xr-x   1 root root    7316 Feb  5 08:51 libBrokenLocale-2.17.so
+-rwxr-xr-x   1 root root 2062196 Feb  5 08:51 libc-2.17.so
+-rwxr-xr-x   1 root root   17912 Feb  5 08:51 libdl-2.17.so
+-rwxr-xr-x   1 root root   49792 Feb  5 08:51 libnss_nis-2.17.so
+-rwxr-xr-x   1 root root  195156 Feb  5 08:50 libcidn-2.17.so
+-rwxr-xr-x   1 root root  109968 Feb  5 08:50 libnsl-2.17.so
+-rwxr-xr-x   1 root root   35924 Feb  5 08:50 libthread_db-1.0.so
+-rwxr-xr-x   1 root root   35836 Feb  5 08:50 libnss_db-2.17.so
+-rwxr-xr-x   1 root root   25704 Feb  5 08:50 libnss_dns-2.17.so
+-rwxr-xr-x   1 root root   22196 Feb  5 08:50 libnss_hesiod-2.17.so
+-rwxr-xr-x   1 root root   39996 Feb  5 08:50 librt-2.17.so
+-rwxr-xr-x   1 root root   12836 Feb  5 08:50 libutil-2.17.so
+drwxr-xr-x.  3 root root    4096 Feb  5 07:49 i686
+drwxr-xr-x.  5 root root    4096 Jan 27 06:51 jvm-exports
+drwxr-xr-x.  7 root root    4096 Jan 27 06:51 jvm
+drwxr-xr-x.  6 root root    4096 Jan 27 06:51 jvm-private
+drwxr-xr-x.  6 root root    4096 Jan 27 03:19 rpm
+drwxr-xr-x.  2 root root    4096 Jan 13 06:20 binfmt.d
+drwxr-xr-x.  3 root root    4096 Jan 13 06:20 kernel
+drwxr-xr-x.  2 root root    4096 Jan 13 06:20 modules-load.d
+drwxr-xr-x. 72 root root   12288 Dec 22 10:52 firmware
+drwxr-x---.  6 root root    4096 Dec 22 10:52 firewalld
+drwxr-xr-x.  3 root root    4096 Dec 22 10:52 crda
+drwxr-xr-x.  2 root root    4096 Dec 22 10:51 yum-plugins
+drwxr-xr-x.  2 root root    4096 Dec 22 10:49 udisks2
+drwxr-xr-x.  2 root root    4096 Dec 22 10:49 modprobe.d
+drwxr-xr-x.  4 root root    4096 Dec 22 10:48 dracut
+lrwxrwxrwx   1 root root      10 Dec 22 10:48 cpp -> ../bin/cpp
+drwxr-xr-x.  3 root root    4096 Dec 15 09:16 grub
+lrwxrwxrwx   1 root root      30 Oct 25 23:36 sendmail -> /etc/alternatives/mta-sendmail
+lrwxrwxrwx   1 root root      25 Oct 25 23:36 sendmail.sendmail -> ../sbin/sendmail.sendmail
+drwxr-xr-x.  3 root root    4096 Oct 11 14:47 python2.7
+lrwxrwxrwx.  1 root root      24 Aug 26  2015 sendmail.postfix -> ../sbin/sendmail.postfix
+drwxr-xr-x.  4 root root    4096 Aug 26  2015 x86_64-redhat-linux6E
+drwxr-xr-x.  3 root root    4096 Aug 26  2015 kde4
+drwxr-xr-x.  3 root root    4096 Aug 26  2015 kde3
+drwxr-xr-x.  4 root root    4096 Aug 26  2015 mozilla
+-rw-r--r--   1 root root     899 Aug  7  2015 libfreebl3.chk
+-rw-r--r--   1 root root     899 Aug  7  2015 libfreeblpriv3.chk
+-rwxr-xr-x   1 root root   10640 Aug  7  2015 libfreebl3.so
+-rwxr-xr-x   1 root root  414960 Aug  7  2015 libfreeblpriv3.so
+drwxr-xr-x.  9 root root    4096 Jul 21  2015 cups
+drwxr-xr-x.  3 root root    4096 Jul 15  2015 gcc
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java-1.5.0
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java-1.6.0
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java-1.7.0
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java-1.8.0
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 java-ext
+drwxr-xr-x.  2 root root    4096 Jul  2  2015 jvm-commmon
+drwxr-xr-x.  3 root root    4096 May 25  2015 debug
+dr-xr-xr-x.  2 root root    4096 May 25  2015 games
+dr-xr-xr-x.  2 root root    4096 May 25  2015 sse2
+drwxr-xr-x.  3 root root    4096 Apr 27  2015 gems
+drwxr-xr-x.  3 root root    4096 Dec 12  2014 alsa
+drwxr-xr-x.  6 root root    4096 Sep 29  2014 kbd

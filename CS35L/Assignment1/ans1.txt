@@ -1,0 +1,190 @@
+1.
+ANSWER: man -k
+
+Command: man man
+Scrolled through to find instructions that matched question
+
+2.
+ANSWER: /usr/bin/cp
+ANSWER: /usr/bin/wc
+
+Command: whereis cp
+Command: whereis wc
+Find paths to cp and wc files
+
+* Alternative *
+Command: man -k path
+Found command which that shows path of commands
+
+Command: which cp
+Command: which wc
+Find paths to cp and wc files
+
+3.
+ANSWER: X - a portable, network-transparent window system
+ANSWER: [ - condition evaluation utility
+ANSWER: w - display who is logged in and what they are doing
+
+Command: man find
+Found -executable command that searches for executable programs
+
+Command: find /usr/bin -executable -name ?
+Use find in /usr/bin because that is where executable programs are most likely t
+o be found
+Resulted in:
+/usr/bin/[
+/usr/bin/w
+/usr/bin/X
+
+Command: man X
+Command: man [
+Command: man w
+Find the functions of those commands
+
+4.
+ANSWER: /etc/alternatives/emacs
+
+Command: man -k symbolic
+Found readlink function that can read contents of symbolic link
+This was also covered in class
+
+Command: readlink /usr/bin/emacs
+Found target file that is actually executed
+
+5.
+ANSWER: g+s - give permission to set user or group ID on execution to group memb
+ers
+ANSWER: o-x - remove permission to execute a file or recurse a directory tree fr
+om others
+
+Used the first powerpoint to find the meanins of g, o, x
+
+Command: man chmod
+Read through to find what s for
+
+6.
+ANSWER: find -mtime -20
+
+Command: man find
+Found mtime function
+Instructions about rounding the days so I put 20 instead of 21
+
+7.
+ANSWER:
+
+Command: find / -type d -mtime -20
+There were many directories that turned up and it kept printing so I didn’t copy
+ paste it into this answer file
+
+8.
+ANSWER: 241
+
+Command: which find
+Command: whereis find
+Found location of find file is /usr/bin/find
+
+Command: man find
+Found that symbolic link character is “l”
+
+Command: find /usr/bin -type l
+Counted 241 files
+
+9.
+ANSWER: drwxr-xr-x.  6 root root    4096 Sep 29  2014 kbd
+
+Command: cd /usr/lib
+Change to directory specified
+
+Command: man ls
+Find how to use ls to find oldest directory
+
+Command: ls -lt
+Found oldest regular file
+
+10.
+ANSWER: locale gets its data from localedef
+
+Command: man locale
+Find out that locale command displays locale settings
+
+Command: man -k locale
+Find localedef command defines locale environment
+
+11.
+ANSWER:
+Buffer-menu-sort              M-x ... RET
+   Sort Tabulated List entries by the column at point.
+sort-columns                  M-x ... RET
+   Sort lines in region alphabetically by a certain range of columns.
+sort-fields                   M-x ... RET
+   Sort lines in region lexicographically by the ARGth field of each
+   line.
+sort-lines                    M-x ... RET
+   Sort lines in region alphabetically; argument means descending
+   order.
+sort-numeric-fields           M-x ... RET
+   Sort lines in region numerically by the ARGth field of each line.
+sort-pages                    M-x ... RET
+   Sort pages in region alphabetically; argument means descending
+   order.
+sort-paragraphs               M-x ... RET
+   Sort paragraphs in region alphabetically; argument means descending
+   order.
+sort-regexp-fields            M-x ... RET
+   Sort the text in the region region lexicographically.
+tabulated-list-col-sort       M-x ... RET
+   Sort Tabulated List entries by the column of the mouse click E.
+tabulated-list-sort           M-x ... RET
+   Sort Tabulated List entries by the column at point.
+
+Command: C-h a sort
+Used emacs commands sheet from class to find apropos command
+
+12.
+ANSWER:
+C-M-a - moves cursor to beginning of line
+C-M-b - moves cursor backwards by one place
+C-M-c - exit from innermost recursive edit or minibuffer
+C-M-d - forward deletes
+C-M-e - moves cursor to end of line
+C-M-f - moves cursor forwards by one placae
+C-M-g - does not exist
+C-M-h - mark function
+
+Found abdef by testing it out here in this text file
+Found cgh by using emacs commands cheat sheet
+
+13.
+ANSWER:
+Runs the command keyboard-quit, signals a 'quit' condition
+Causes a quit directly
+
+Command: C-h k C-g
+Found the detailed description of command C-g
+
+14.
+ANSWER:
+Reinserts most recently killed or yanked stretch of text
+
+Command: C-h f yank
+Found the detailed description of function yank
+
+15.
+ANSWER:
+  /usr/bin:
+  total used in directory 292672 available 13979564
+  dr-xr-xr-x.   2 root root       69632 Mar  2 11:07 .
+  drwxr-xr-x.  15 root root        4096 Dec 22 10:48 ..
+
+Command: cd /usr/bin
+Command: ls -l > ~/Classes/CS35L/Assignment1/lsOutput1.txt
+Save the ls -l output into a text file
+
+Command: emacs
+Command: C-h d /usr/bin
+Command: C-x C-s ~/Classes/CS35L/Assignment1/lsOutput2.txt
+Save the emacs directory output into another text file
+
+I used another comparing software to compare both text files since the diff -u c
+ommand did not work because of the different spacings between the directory info
+rmation.
