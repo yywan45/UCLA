@@ -1,0 +1,186 @@
+#! /usr/bin/python 
+
+import random, sys, locale, string
+from optparse import OptionParser
+
+class comm:
+    def __init__(self, args, onlyFile1, onlyFile2, bothFiles, unsortedFiles):
+
+        # take into account if file1 or file2 is stdin
+        
+        if args[0] == "-":
+            self.lines1 = sys.stdin.readlines()
+        else:
+            f1 = open(args[0], 'r')
+            self.lines1 = f1.readlines()
+            f1.close()
+
+        if args[1] == "-":
+            self.lines2 = sys.stdin.readlines()
+        else:
+            f2 = open(args[1], 'r')
+            self.lines2 = f2.readlines()
+            f2.close()
+
+        self.onlyFile1 = onlyFile1
+        self.onlyFile2 = onlyFile2
+        self.bothFiles = bothFiles
+        self.unsorted = unsortedFiles
+        self.lines1 = self.str_process(self.lines1)
+        self.lines2 = self.str_process(self.lines2)
+        self.file1Name = args[0]
+        self.file2Name = args[1]
+
+    # if the last line of the file is not a new line then append one
+    def str_process(self, file):
+        if not len(file): # since file is a list
+            file.append("\n")
+        else:
+            temp = file[-1]
+            newLine = "\n"
+            if newLine not in temp:
+                temp += newLine
+            file[-1] = temp
+        return file
+
+    def writeline(self, line, output_class):
+        stream = ""
+        if output_class == 1:
+            if not self.onlyFile1:
+                return
+        elif output_class == 2:
+            if not self.onlyFile2:
+                return
+            if self.onlyFile1:
+                stream += "        "
+        elif output_class == 3:
+            if not self.bothFiles:
+                return
+            if self.onlyFile1:
+                stream += "        "
+            if self.onlyFile2:
+                stream += "        "
+        else:
+            sys.stderr.write("Incorrect argument for suppressing\n")
+        sys.stdout.write(stream + line)
+
+    def issorted(self):
+        sorted_line1, sorted_line2 = sorted(self.lines1), sorted(self.lines2)
+        files_sorted = True
+
+        if sorted_line1 != self.lines1:
+            files_sorted = False
+            sys.stderr.write(self.file1Name)
+            sys.stderr.write(" is not sorted.\n")
+
+        if sorted_line2 != self.lines2:
+            files_sorted = False
+            sys.stderr.write(self.file2Name)
+            sys.stderr.write(" is not sorted.\n")
+            
+        return files_sorted
+
+    def compare_files(self):
+        if self.unsorted:
+            diff_line2 = self.lines2
+            for line1 in self.lines1:
+                if line1 not in self.lines2:
+                    self.writeline(line1, int(1))
+                else:
+                    self.writeline(line1, int(3))
+                    diff_line2.remove(line1)
+
+            for line2 in diff_line2:
+                self.writeline(line2, int(2))
+            return
+
+        if not self.issorted():
+            return
+
+        i, j = 0, 0
+        len_line1, len_line2 = len(self.lines1), len(self.lines2)
+
+        while i in range(len_line1) or j in range(len_line2):
+            line1,line2 = "", ""
+
+            if i < len_line1:
+                line1 = self.lines1[i]
+            if j < len_line2:
+                line2 = self.lines2[j]
+
+            if line1 == "" or line1 > line2:
+                self.writeline(line2, 2)
+                j += 1
+            elif line2 == "" or line1 < line2:
+                self.writeline(line1, 1)
+                i += 1
+            else:
+                self.writeline(line2, 3)
+                i += 1
+                j += 1
+        return
+
+def main():
+    version_msg = "%prog 2.0"
+    usage_msg = """%prog [OPTION]... FILE1 FILE2
+    Compare files FILE1 and FILE2 line by line.
+    When FILE1 or FILE2 (not bothFiles) is -, read standard input.
+    -1 suppress column 1 (lines unique to FILE1)
+    -2 suppress column 2 (lines unique to FILE2)
+    -3 suppress column 3 (lines that appear in both files)
+    -u Allows sorting of unsorted files
+    """
+
+    parser = OptionParser(version=version_msg, usage=usage_msg)
+    parser.add_option("-1", action="store_false", dest="onlyFile1",
+                      default=True,
+                      help="Suppress column 1 (lines unique to FILE1)")
+    parser.add_option("-2", action="store_false", dest="onlyFile2",
+                      default=True,
+                      help="Suppress column 2 (lines unique to FILE2)")
+    parser.add_option("-3", action="store_false", dest="bothFiles",
+                      default=True,
+                      help="Suppress column 3 (lines in both files)")
+    parser.add_option("-u", action="store_true", dest = "unsortedFiles",
+                      default=False,
+                      help="Compatible with unsorted files")
+    options, args = parser.parse_args(sys.argv[1:])
+
+    try:
+        onlyFile1 = bool(options.onlyFile1)
+    except:
+        parser.error("Invalid argument for -1: {0}".
+                     format(options.onlyFile1))
+    try:
+        onlyFile2 = bool(options.onlyFile2)
+    except:
+        parser.error("Invalid argument for -2: {0}".
+                     format(options.onlyFile2))
+    try:
+        bothFiles = bool(options.bothFiles)
+    except:
+        parser.error("Invalid argument for -3: {0}".
+                     format(options.bothFiles))
+    try:
+        unsortedFiles = bool(options.unsortedFiles)
+    except:
+        parser.error("Invalid argument for -u: {0}".
+                     format(options.unsortedFiles))
+
+    if len(args) != 2:
+        parser.error("Invalid number of arguments")
+
+    if args[0] == "-" and args[1] == "-":
+        parser.error("Both files cannot be read from stdin")
+
+    try:
+        generator = comm(args, onlyFile1, onlyFile2, bothFiles, unsortedFiles)
+    except OSError as err:
+        parser.error("OS Error: {0}".format(err))
+    try:
+        generator.compare_files()
+    except:
+        parser.error("error")
+
+if __name__ == "__main__":
+    main()

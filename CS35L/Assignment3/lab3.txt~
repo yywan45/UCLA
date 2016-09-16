@@ -1,0 +1,77 @@
+Command: wget ftp://ftp.gnu.org/gnu/coreutils/coreutils-7.6.tar.gz
+Download source file into working directory
+
+Command: tar -xzvf coreutils-7.6.tar.gz
+Extract the source files
+
+Command: mkdir coreutilsInstall
+Make directory in assignment directory
+
+Command: cd coreutils-7.6
+Change directory to folder created
+
+Command: ./configure --prefix=/u/eng/ugrad/yuenw/Classes/CS35L/Assignment3/coreutilsInstall
+Configure path
+
+Command: make && make install
+Compile the program and install it
+
+Command: export LC_ALL='en_US.UTF-8'
+Command: cd ../coreutilsInstalll/bin
+Change directory and locale to reproduce buggy format
+
+Command: ./ls -l /bin/bash
+-rwxr-xr-x 1 root root 960376 2015-07-08 04:11 /bin/bash
+Buggy format
+
+Command: cd ../../coreutils-7.6/
+Command: cat > patch.diff
+Create patch.diff file and open with emacs
+Copy and paste the patch from website into patch.diff
+
+Command: patch -p1 < patch.diff
+
+Command: make
+Recompile the program
+
+Command: cd ..
+Change directory to top directory
+
+
+Recently modified file:
+
+Command: ./coreutilsInstall/bin/ls -l ./coreutils-7.6.tar.gz
+Buggy format
+-rw-r--r-- 1 yuenw engugrad 10014650 2016-04-14 15:30 ./coreutils-7.6.tar.gz
+
+Command: ./coreutils-7.6/src/ls -l ./coreutils-7.6.tar.gz
+Correct format
+-rw-r--r-- 1 yuenw engugrad 10014650 Apr 14 15:30 ./coreutils-7.6.tar.gz
+
+
+At least one-year-old file:
+
+Command: cat > 1yoFile
+Create a file named 1yoFile in assignment directory
+
+Command: touch -t 1304140000 1yoFile
+Change date of 1yoFile to Apr 14 2013 0:00
+
+Command: ./coreutilsInstall/bin/ls -l ./1yoFile
+Buggy format
+-rw-r--r-- 1 yuenw engugrad 0 2013-04-14 00:00 ./1yoFile
+
+Command: ./coreutils-7.6/src/ls -l ./1yoFile
+Correct format
+-rw-r--r-- 1 yuenw engugrad 0 Apr 14  2013 ./1yoFile
+
+
+
+
+
+
+
+
+
+
+
