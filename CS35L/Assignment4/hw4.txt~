@@ -1,0 +1,90 @@
+2.
+Command: git clone ~eggert/src/gnu/diffutils diffutilsHW
+Copy diffutils into another directory
+
+Command: cd diffutilsHW
+Command: git checkout -b 'quote' 'v3.0'
+Checkout
+
+3. Install patches
+Command: patch -p1 < quote-3.0-patch.txt
+Install patches
+
+patching file src/cmp.c
+patching file src/diff.c
+patching file src/diff3.c
+patching file src/dir.c
+patching file src/sdiff.c
+patching file src/util.c
+
+4.
+Command: emacs
+Command: C-x 4 a
+Read online about how to use this function
+
+5.
+Command: emacs
+Command: C-x 4 a
+Open emacs and open Changelog
+
+6.
+Command: git commit -aF ChangeLog
+Commit changes
+
+7.
+Command: git format-patch -1 --stdout > formatted-patch.txt
+Generate patches, i.e. formatted-patch.txt
+
+8.
+
+Partner's name: Kevin Hsieh
+Partner's UID: 904568541
+Partner's file: KH-formatted-patch.txt
+
+Command: git checkout -b 'partner' 'v3.0'
+Created a new 3.0 branch named partner
+
+Command: git am KH-formatted-patch.txt
+Apply Kevin's patch
+Applying: src/cmp.c, src/diff.c, src/diff3.c, src/dir.c, src/sdiff.c, src/util.c
+: Patched in response to a change in the GNU coding standards, which now suggest
+quoting 'like this' or "like this", instead of `like this' or ``like this''.
+
+Command: ./bootstrap
+Command: ./configure
+Command: make
+Command: make check
+Repeated 13. from lab
+
+Command: ./src/diff . -
+Command: ./src/diff --help
+` were all gone and replaced by '
+
+9.
+Command: make distdir
+Command: cd diffutils-3.0.1-3c73
+Command: cat < ChangeLog
+Top entry:
+
+2016-04-22  Kevin Andy Hsieh  <hsiehk@lnxsrv07.seas.ucla.edu>
+
+        src/cmp.c, src/diff.c, src/diff3.c, src/dir.c, src/sdiff.c, src/util.c:
+Patched in response to a change in the GNU coding standards, which now suggest q
+uoting 'like this' or "like this", instead of `like this' or ``like this''.
+
+10.
+Command: git clone ~eggert/src/gnu/emacs
+Command: cd emacs
+Clone emacs directory into working directory
+
+Command: gitk
+Check using gitk
+Received error message (apparently Cygwin related?)
+Downloaded X11 and relogged in using ssh -X
+Window of gitk opened
+Scrolled through timestamp window
+Found newest merge point no newer than 2015-01-25
+2015-01-25 12:19:27
+Merge branch 'master' into xwidget
+
+wo;ifaweofijaw;oeifjo;wiefj;aowiejf;aoiwejf;owiefja;owiejfa;owiefja;owiejf;oawiejf;oawiejf;aoi

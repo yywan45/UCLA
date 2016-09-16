@@ -1,0 +1,16 @@
+2016-04-28  Yuen Yee Wan  <yuenw@lnxsrv02.seas.ucla.edu>
+
+	* lib/timespec.h (timespec_cmp): avoid integer overflow that occurs with subtraction by using direct comparison; avoids problems involving ordering files in order of timestamp
+
+--- lib/timespec.h	2005-09-21 23:05:39.000000000 -0700
++++ lib/timespec.h	2016-04-28 21:37:01.266080000 -0700
+@@ -45,8 +45,7 @@
+ static inline int
+ timespec_cmp (struct timespec a, struct timespec b)
+ {
+-  int diff = a.tv_sec - b.tv_sec;
+-  return diff ? diff : a.tv_nsec - b.tv_nsec;
++  return a.tv_sec > b.tv_sec ? 1 : (a.tv_sec < b.tv_sec ? -1 : a.tv_nsec - b.tv_nsec);
+ }
+ 
+ # if ! HAVE_DECL_NANOSLEEP

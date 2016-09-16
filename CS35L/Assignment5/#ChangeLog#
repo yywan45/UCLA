@@ -1,0 +1,4 @@
+2016-04-28  Yuen Yee Wan  <yuenw@lnxsrv02.seas.ucla.edu>
+
+	* lib/timespec.h (timespec_cmp): avoid integer overflow that occurs with subtraction by using direct comparison; avoids problems involving ordering files in order of timestamp
+

@@ -1,0 +1,196 @@
+1.
+Command: git clone ~eggert/src/gnu/diffutils
+
+Command: cd diffutils
+Change directory
+
+2.
+Command: git log > git-log.txt
+
+3. 
+Command: git tag > git-tags.txt
+
+4.
+Command: emacs git-log.txt
+Command: C-s m a i n t : q u
+Found hash number
+
+Command: git format-patch -1 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f --stdout > quote-patch.txt
+Generated patch using hash number
+
+5.
+Command: git checkout -b 'my3.0' 'v3.0'
+Checked out version 3.0 and made a new branch called my3.0
+
+6.
+Command: patch -p1 < quote-patch.txt
+Problems encountered:
+Files that didn't exist : HACKING, doc/diffutils.texi, man/help2man
+Conflicts: README (9,60), README-hacking (19), cfg.mk (29), src/diff.c (876,906,942), src/diff3.c (433)
+
+7.
+Command: git status
+On branch my3.0
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   NEWS
+	modified:   README
+	modified:   TODO
+	modified:   doc/diagmeet.note
+	modified:   ms/config.bat
+	modified:   ms/config.site
+	modified:   po/en.po
+	modified:   src/analyze.c
+	modified:   src/cmp.c
+	modified:   src/context.c
+	modified:   src/diff.c
+	modified:   src/diff.h
+	modified:   src/diff3.c
+	modified:   src/dir.c
+	modified:   src/ifdef.c
+	modified:   src/io.c
+	modified:   src/sdiff.c
+	modified:   src/side.c
+	modified:   src/system.h
+	modified:   src/util.c
+	modified:   tests/help-version
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	NEWS.orig
+	README-hacking.orig
+	README-hacking.rej
+	README.orig
+	README.rej
+	cfg.mk.orig
+	cfg.mk.rej
+	git-log.txt
+	git-tags.txt
+	ms/config.site.orig
+	quote-patch.txt
+	src/cmp.c.orig
+	src/context.c.orig
+	src/diff.c.orig
+	src/diff.c.rej
+	src/diff.h.orig
+	src/diff3.c.orig
+	src/diff3.c.rej
+	src/dir.c.orig
+	src/sdiff.c.orig
+	src/system.h.orig
+	src/util.c.orig
+	tests/help-version.orig
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+8.
+I read online about the emacs functions and tested some of them out on files that I created
+
+9.
+Command: emacs NEWS C-x v u
+Repeat step for NEWS, README, TODO, doc/diagmeet.note, ms/config.bat,
+ms/config.site, po/en.po, src/diff.h, src/system.h, tests/help-version
+
+Command: emacs src/analyze.c C-x v =
+Check changes using vc-diff to see which changes need to be made
+
+Command: M-n
+Go to hunk
+
+Command: C-u C-c C-a
+Undo change of hunk (if change is done to code, then go to next hunk M-n)
+
+Repeat step for all modified .c files
+
+Command: C-x v u
+If all changes are made to comments then just revert all
+
+Lines of changes reverted:
+
+analyze.c: all
+cmp.c: 36, 364, 377
+context.c: all
+diff.c: 40, 57, 92
+diff3.c: 35, 159, 1475
+dir.c: 84, 125, 234
+ifdef.c: all
+io.c: all
+sdiff.c: 35, 92, 747
+side.c: all
+util.c: 27, 121, 146, 190, 241, 270, 650
+
+
+10.
+Command: emacs src/diff.c.rej
+Manually changed ` to ' in diff.c within the code
+
+Command emacs src/diff3.c.rej
+Manually changed ` to '	in diff3.c within the code
+
+11.
+Command: git clean -f
+Clear all untracked files
+
+12.
+Command: git status
+
+#	 modified:   src/cmp.c
+#	 modified:   src/diff.c
+#	 modified:   src/diff3.c
+#	 modified:   src/dir.c
+#	 modified:   src/sdiff.c
+#	 modified:   src/util.c
+
+Command: git diff > quote-3.0-patch.txt
+Output the differences into a txt file
+
+13.
+Command: ./bootstrap
+Command: ./configure
+Command: make
+Command: make check
+Build the modified version with	bootstrap then configure and make
+Did not apply additional patch because using lnxsrv02
+
+Command: ./src/diff . -
+Command: ./src/diff --help
+Both outputs do not have backticks `
+
+14.
+Command: cd ..
+Command: mkdir diffutils-3.0
+Command: mkdir diffutils-3.0-patch
+Command: git clone ~eggert/src/gnu/diffutils diffutils-3.0-orig
+Copied the code again into an original directory
+
+Command: cd diffutils-3.0-orig
+Command: git checkout 'v3.0' -b 'o3.0'
+Checkout original v3.0 code
+
+Command: cp ./src/*.c ../diffutils-3.0/
+Copy the original source codes to diffutils-3.0
+
+Command: cd..
+Command: cp ./diffutils/src/*.c ./diffutils-3.0-patch/
+Copy patched source codes to diffutils-3.0-patch
+
+Command: ./diffutils/src/diff -pru diffutils-3.0 diffutils-3.0-patch > quote-3.0-test.txt
+Compare using the patched diff
+
+Command: diff -u quote-3.0-test.txt diffutils/quote-3.0-patch.txt
+Compare the two patches
+Many differences in the output
+
+
+
+There seem to be a lot of differences, but the don't differ in actual contents.
+The differences are mainly from paths for files and hashes.
+
+In quote-3.0-test.txt, the diff part for diff3.c is ahead of diff.c,
+while in quote-3.0-patch.txt, it comes after diff.c.
+
+When I clip them to be in the same position (I created a new file for this)
+Every difference is innocuous.

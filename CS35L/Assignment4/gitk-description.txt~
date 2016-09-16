@@ -1,0 +1,21 @@
+5 subwindows
+Label them ABCDE from left to right where A-C is upper half and D-E is lower half
+
+A
+Structure of repository
+hierarchical tree of commits and their relationships with branches
+Information about the branches
+Right below A shows SHA1 ID hash commit number
+
+B
+Authors and email addresses of corresponding commits in A window
+
+C
+Timestamps of corresponding commits in A window
+
+D
+ChangeLog of commits
+Changes in the file like in diff format
+
+E
+Files affected by commit

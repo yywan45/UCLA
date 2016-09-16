@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+int charDuplicate(const char* str, char x)
+{
+  for (; *str != 0; str++)
+    if (*str == x)
+      return 1;
+  return 0;
+}
+
+int checkDuplicate(const char* str)
+{
+    for (; *str != 0; str++)
+        if (charDuplicate((str+1), *str))
+            return 1;
+    return 0;
+}
+
+char findletter(const char* from, const char* to, size_t length, char x)
+{
+    for (size_t i = 0; i < length; i++)
+        if (from[i] == x)
+            return to[i];
+    return x;
+}
+
+void reportErr(const char* errMsg)
+{
+    fprintf(stderr, errMsg);
+    exit(1);
+}
+
+int main(int argc, const char * argv[])
+{
+    if (argc != 3)
+        reportErr("Requires 3 arguments.");
+    
+    const char *from = argv[1];
+    const char *to = argv[2];
+    
+    if (!strlen(from))
+        reportErr("Missing operand.");
+    
+    if (strlen(from) != strlen(to))
+        reportErr("Arguments are not same lengths.");
+    
+    if (checkDuplicate(from))
+        reportErr("From has duplicate bytes.");
+    
+    char source[2];
+    
+    for (;;)
+    {
+        ssize_t ret = read(STDIN_FILENO, source, 1);
+        if (!ret)
+            break;
+        else if (ret < 0)
+            reportErr("Read error.");
+        source[0] = findletter(from, to, strlen(from), source[0]);
+        ret = write(STDOUT_FILENO, source, 1);
+        if (ret < 0)
+            reportErr("Write error.");
+    }
+    return 0;
+}

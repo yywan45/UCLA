@@ -1,0 +1,25 @@
+1.
+Yes, it is still secure due to the asymmetric key encryption.
+The private key is stored on our computers and the other teams can only see our public key.
+Other teams cannot enter our host and decrypt any messages without our private key.
+Other teams cannot find private key using our public key.
+
+(1) Yes, it is still secure.
+Private key is generated.
+Even with the same passphrase, private key generated will be different.
+
+(2) It depends.
+Yes, it is still secure if the system files are not located on the USB drive because they do not know our private key.
+No, it is not secure if the system files are located on the USB drive.
+They can then read the private key data and find our private key, thus being able to log into our host and decipher our messages.
+
+2.
+The program verifies if the target file and the detached signatures match.
+This is useful for other people to verify my public keys.
+However, a hacker could replace the public key inside and recreate the tarball.
+They can then output the detached signature file from the tar file with my name and email.
+The gpg --verify command doesn't help since it only verifies if the signatures match and are good.
+
+I could post my public key or detached signature file online.
+Anyone who downloads my tar file can verify whether the file is created by me and whether it is modified.
+Certificate authorities can verify to the receiver that they have the right key from the correct owner.

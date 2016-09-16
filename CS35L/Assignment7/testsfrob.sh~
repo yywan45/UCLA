@@ -1,0 +1,34 @@
+#!/bin/bash
+
+dir='./input_1000000'
+
+echo "Default is 1000000 lines"
+
+if [ $# -ne 0 ]
+then
+    if [ $1 -eq 100 ]
+    then
+	dir='./test100'
+    elif [ $1 -eq 1000 ]
+    then
+	dir='./test1000'
+    elif [ $1 -eq 10000 ]
+    then
+	dir='./test10000'
+    elif [ $1 -eq 100000 ]
+    then
+	dir='./test100000'
+    elif [ $1 -eq 1000000 ]
+    then
+	dir='./test1000000'
+	
+    fi
+fi
+
+echo 'sfrob'
+time ./sfrob < $dir > output_sfrob
+
+echo 'sfrobu'
+time ./sfrobu < $dir > output_sfrobu
+
+rm output_sfrob*

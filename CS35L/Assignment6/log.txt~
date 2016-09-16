@@ -1,0 +1,55 @@
+Set up Ubuntu using disk
+
+Command: sudo apt-get install openssh-server
+Command: sudo apt-get install openssh-client
+Install OpenSSH
+
+Command: ssh-keygen
+Generate keys
+Used default location
+Public key:
+
+Command: sudo apt-get install emacs
+Install emacs
+
+Command: ifconfig
+Find IP address
+10.97.85.
+Yolanda's IP address:
+
+Command: sudo emacs /etc/ssh/sshd_config
+Disable password-based authentication
+
+Command: sudo useradd -d /home/yolanda -m yolanda
+Command: sudo passwd yolanda
+Command: sudo mkdir /home/yolanda/.ssh
+Command: cd /home/yolanda
+Command: sudo chown -R yolanda .ssh
+Command: sudp chmod 700 .ssh
+Set up client's account
+
+Type into Yolanda's computer:
+Command: sudo useradd -d /home/yuenyee -m yuenyee
+Command: sudo passwd yuenyee
+
+Command: ssh -X yolanda@10.97.85
+Command: xterm
+Yolanda's host
+
+Command: ssh-copy-id -i yolanda@10.97.85
+Set up key-based authentication
+Type in yes and password to log in then exit
+
+Command: ssh-add
+Type in public key
+
+Command: ssh yuenyee@10.97.85.
+This enables logging in without typing anything
+
+Command: ssh -X yuenyee@10.97.85.
+Command: xterm
+xterm window popped up
+
+On Yolanda's computer:
+Command: ps aux
+Daemon called xterm with user yuenyee

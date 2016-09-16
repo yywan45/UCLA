@@ -1,0 +1,260 @@
+Command: wget http://web.cs.ucla.edu/classes/spring16/cs35L/assign/coreutils-wit
+h-bug.tar.gz
+Download source file
+
+Command: tar -xvzf coreutils-with-bug.tar.gz
+Unzip source file
+
+Command: cd coreutils-with-bug
+Command: ./configure --prefix='/u/eng/ugrad/yuenw/Classes/CS35L/Assignment5/core
+utils'
+Set the default folder of installation
+
+Command: make
+Same function "futimens" in two locations with different parameters
+Error in output:
+In file included from utimecmp.c:41:0:
+utimens.h:2:5: error: conflicting types for 'futimens'
+ int futimens (int, char const *, struct timespec const [2]);
+     ^
+In file included from utimecmp.h:25:0,
+                 from utimecmp.c:25:
+/usr/include/sys/stat.h:373:12: note: previous declaration of 'futimens' was her
+e
+ extern int futimens (int __fd, const struct timespec __times[2]) __THROW;
+
+Command: wget http://web.cs.ucla.edu/classes/spring16/cs35L/assign/coreutils.dif
+f
+Download patch file
+
+Command: emacs coreutils.diff
+~'s for filenames not necessary
+Edit them out
+Patch fixes the function name problem
+Changes "futimens" to "coreutils_futimens"
+
+Command: patch -p0 < coreutils.diff
+Use the patch
+Output shows successful patch:
+patching file lib/utimens.c
+patching file lib/utimens.h
+patching file src/copy.c
+patching file src/tee.c
+patching file src/touch.c
+
+Command: make
+Command: make install
+Build and install the program
+Libraries are installed in ~/Classes/CS35L/Assignment5/coreutils
+
+Command: cd ..
+Command: emacs bug.sh
+Reproduce the bug
+Create script of commands on assignment page to save time
+
+Script:
+#!/bin/bash
+tmp=$(mktemp -d)
+cd $tmp
+touch -d '1918-11-11 11:00 GMT' wwi-armistice
+touch now
+sleep 1
+touch now1
+TZ=UTC0 ~/Classes/CS35L/Assignment5/coreutils/bin/ls -lt --full-time wwi-armisti
+ce now now1
+cd ~/Classes/CS35L/Assignment5/
+rm -rf $tmp
+
+
+Command: chmod +x bug.sh
+Command: ./bug.sh
+Bug is reproduced as seen in output
+Past date is put in front of future dates
+-rw-r--r-- 1 yuenw engugrad 0 1918-11-11 11:00:00.000000000 +0000 wwi-armistice
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-28 23:38:19.882771971 +0000 now1
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-28 23:38:18.878735260 +0000 now
+
+Command: tmp=$(mktemp -d)
+Command: cd $tmp
+Command: touch -d '1918-11-11 11:00 GMT' wwi-armistice
+Command: touch now
+Command: sleep 1
+Command: touch now1
+Command: TZ=UTC0 ~/Classes/CS35L/Assignment5/coreutils/bin/ls -lt --full-time ww
+i-armistice now now1
+Manually input commands from script to reproduce bug again
+Ensure that files exist in temp
+
+Command: gdb ~/Classes/CS35L/Assignment5/coreutils/bin/ls
+Go into debugger
+
+Command: (gdb) info functions
+Print functions
+Press return repeatedly to print everything
+Found function static void sort_files(void)
+
+Command: (gdb) break sort_files
+Set breakpoint at sorting function
+Breakpoint 1 at 0x4026e0: file ls.c, line 2954.
+
+Command: (gdb) run
+Command: (gdb) list
+List source code around subsequent lines until relevant finding
+2975 	          func = sort_reverse ? rev_cmp_mtime : compare_mtime;
+Problem is probably located around compare_mtime function
+
+Command: (gdb) q
+Quit debugger
+
+Command: gdb ~/Classes/CS35L/Assignment5/coreutils/bin/ls
+Restart debugger
+
+Command: (gdb) break sort_files
+Command: (gdb) break compare_mtime
+Set breakpoints at relevant functions
+Breakpoint 1 at 0x4026e0: file ls.c, line 2954.
+Breakpoint 2 at 0x404990: compare_mtime. (2 locations)
+
+Command: (gdb) run -lt --full-time wwi-armistice now now1
+Below shows the commands I used and the results
+
+Starting program: /w/home.07/eng/ugrad/yuenw/Classes/CS35L/Assignment5/coreutils
+/bin/ls -lt --full-time wwi-armistice now now1
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+
+Breakpoint 1, sort_files () at ls.c:2954
+2954	   {
+(gdb) s
+2962    if (! setjmp (failed_strcoll))
+(gdb) s
+2964        switch (sort_type)
+(gdb) s
+2969	  switch (time_type)
+(gdb) s
+2975	      func = sort_reverse ? rev_cmp_mtime : compare_mtime;
+(gdb) s
+3034    qsort (files, files_index, sizeof *files, func);
+(gdb) s
+
+Breakpoint 2, compare_mtime (a=0x617190, b=0x617240) at ls.c:2884
+2884	   static int compare_mtime (V a, V b) { return cmp_mtime (a, b, xstrcol
+l); }
+(gdb) s
+cmp_mtime (cmp=0x402960 <xstrcoll>, b=0x617240, a=0x617190) at ls.c:2884
+2884	  static int compare_mtime (V a, V b) { return cmp_mtime (a, b, xstrcoll
+); }
+(gdb) s
+timespec_cmp (b=..., a=...) at ../lib/timespec.h:48
+48	       int diff = a.tv_sec - b.tv_sec;
+(gdb) list
+43       /* Return negative, zero, positive if A < B, A == B, A > B, respectivel
+y.
+44          Assume the nanosecond components are in range, or close to it.  */
+45	 static inline int
+46	 timespec_cmp (struct timespec a, struct timespec b)
+47	 {
+48	   int diff = a.tv_sec - b.tv_sec;
+49	     return diff ? diff : a.tv_nsec - b.tv_nsec;
+50	 }
+51
+52	 # if ! HAVE_DECL_NANOSLEEP
+(gdb) s
+49      return diff ? diff : a.tv_nsec - b.tv_nsec;
+(gdb) info locals
+diff = 1461886841
+
+
+Value diff returns the value to a subtraction of seconds
+We see that diff appears to be a very large number
+Doesn't look right (overflow?)
+
+Problem probably arises from the subtraction
+
+Command: (gdb) q
+Quit debugger
+
+Command: cd ~/Classes/CS35L/Assignment5/coreutils-with-bug/lib
+Command: cp timespec.h ../../timespec.h
+Copy the file onto working directory
+
+Command: cd ../../
+Command: emacs timespec.h
+Modify timespec_cmp function to:
+static inline int
+timespec_cmp (struct timespec a, struct timespec b)
+{
+  return a.tv_sec > b.tv_sec ? 1 : (a.tv_sec < b.tv_sec ? -1 :
+  a.tv_nsec - b.tv_nsec);
+}
+
+Command: diff -u coreutils-with-bug/lib/timespec.h timespec.h > coreutils-with-b
+ug/patch.diff
+Produce patch from change
+
+Command: emacs
+Command: C-x 4 a
+Update ChangeLog
+
+2016-04-28  Yuen Yee Wan  <yuenw@lnxsrv02.seas.ucla.edu>
+
+        * lib/timespec.h (timespec_cmp): avoid integer overflow that occurs with
+	subtraction by using direct comparison; avoids problems involving orderi
+	ng files in order of timestamp
+
+Command: cp ChangeLog lab5.diff
+Command: cat coreutils-with-bug/patch.diff >> lab5.diff
+Append patch to lab5.diff patch which includes ChangeLog
+
+Command: emacs lab5.diff
+Modify path names
+Replace both path names with lib/timespec.h
+
+Command: mv lab5.diff coreutils-with-bug/lab5.diff
+Command: patch -p0 < lab5.diff
+Patch file using lab5.diff patch
+Output:
+patching file lib/timespec.h
+
+Command: make
+Recompile using make
+
+Command: cd ..
+Command: cp bug.sh test.sh
+Make a copy of bug producing script to test patched files
+
+Command: emacs test.sh
+Modify testing script to suit new path / newly patched files
+Replace TZ=UTC0 ...... /coreutils/bin/ls -lt --full-time wwi-armistice now now1
+with TZ=UTC0 ....... /coreutils-with-bug/src/ls -lt --full-time wwi-armistice no
+w now1
+
+Command: ./test.sh
+Output show that the edit to source code worked
+Files are ordered right according to timestamp
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-29 04:55:15.113915305 +0000 now1
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-29 04:55:14.109878096 +0000 now
+-rw-r--r-- 1 yuenw engugrad 0 1918-11-11 11:00:00.000000000 +0000 wwi-armistice
+
+Command: cd ~
+Go to home directory to test on SEASnet machine
+
+Command: touch -d '1918-11-11 11:00 GMT' wwi-armistice
+Command: touch now
+Command: touch now1
+Command: TZ=UTC0 ls -lt --full-time wwi-armistice now now1
+Output shows future year
+-rw-r--r-- 1 yuenw engugrad 0 2054-12-17 17:28:16.000000000 +0000 wwi-armistice
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-29 04:56:32.900115000 +0000 now1
+-rw-r--r-- 1 yuenw engugrad 0 2016-04-29 04:56:30.467819000 +0000 now
+
+SEASnet server cannot recognize time '1918-11-11 11:00 GMT'
+Interprets it as future time '2054-12-17 17:28:16'
+
+From CS33 knowledge:
+Local linux system is a 64-bit system
+Most significant bit is sign bit indicating whether time is in past/future
+SEASnet is 32 bit NFS system
+Truncates the first half of integer in binary form (i.e. first 32 bits)
+Sign bit is truncated, which leaves a positive integer
+Times in the very past are interpreted as times in the very future

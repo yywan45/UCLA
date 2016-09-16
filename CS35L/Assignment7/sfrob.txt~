@@ -1,0 +1,42 @@
+Compare time of sfrob and sfrobu
+Run program on inputs of varying numbers of input words
+Each word is 10 characters long and chosen and combined randomly from ascii table
+Time is in unit seconds
+
+$ time ./sfrob < test100 > output_sfrob
+$ time ./sfrobu	 < test100 > output_sfrobu
+$ rm output_sfrob*
+
+Repeat these commands for test1000, test10000, test100000, test1000000
+Compile	     results  in table below
+
+|| words   ||         sfrob        ||		  sfrobu         ||
+|| words   || real  | user  | sys   || real   | user  | sys    ||
+|| 100     || 0.004 | 0.001 | 0.001 ||  0.006 | 0.001 |  0.003 ||
+|| 1000    || 0.006 | 0.003 | 0.000 ||  0.031 | 0.002 |  0.027 ||
+|| 10000   || 0.022 | 0.015 | 0.001 ||  0.285 | 0.023 |  0,256 ||
+|| 100000  || 0.217 | 0.149 | 0.007 ||  2.870 | 0.166 |  2.667 ||
+|| 1000000 || 2.228 | 1.682 | 0.043 || 28.606 | 1.851 | 26.346 ||
+
+Estimate number of comparisons as function of number of input words
+Use linear regression calculator on table above
+
+|| words   || Comparisons ||
+|| 100     || 534         ||
+|| 1000    || 8725        ||
+|| 10000   || 120483      ||
+|| 100000  || 1536192     ||
+|| 1000000 || 18674104    ||
+
+Number of comparisons = 18.749x - 98360.198
+x represents number of words
+
+
+$ time ./sfrobs < input.txt > sfrobsOutput
+real   0m0.336s
+user   0m0.035s
+sys    0m0.022s
+
+The shell script is a lot faster compared to the C programs
+
+
