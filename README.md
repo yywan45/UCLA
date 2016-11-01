@@ -4,3 +4,4 @@
 - CS32: Introduction to Computer Science II (Winter 2016)  
 - CS33: Introduction to Computer Organization (Spring 2016)  
 - CS35L: Software Construction Laboratory (Spring 2016)
+- CS111: Operating Systems (Fall 2016)
